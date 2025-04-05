@@ -509,7 +509,7 @@ def home():
         })
 
     # Si la solicitud es normal (desde un navegador), renderizar el HTML
-    return render_template('Home.html', user=nombre_usuario, horas_activas=horas_activas, promedio_horas=promedio_horas)
+    return render_template('home.html', user=nombre_usuario, horas_activas=horas_activas, promedio_horas=promedio_horas)
 
 # Funcion de los productos de la tienda
 @app.route('/tienda', methods=['POST','GET'])
