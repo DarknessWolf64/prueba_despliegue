@@ -525,7 +525,8 @@ def paquetes():
 
     try:
         connection = get_db_connection()
-        cursor = connection.cursor(dictionary=True)
+        # Se añade buffered=True aquí:
+        cursor = connection.cursor(dictionary=True, buffered=True)
 
         # Verificar si el usuario ha comprado antes
         if usuario_google:
