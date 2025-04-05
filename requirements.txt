@@ -1,6 +1,6 @@
 Flask==3.1.0
 google_auth_oauthlib==1.2.1
-mysql_connector_repackaged==0.3.1
+mysql-connector-python==8.3.0
 Requests==2.32.3
 stripe==11.4.1
 Werkzeug==3.1.3
