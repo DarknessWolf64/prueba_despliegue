@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Pago - Mercado Pago</title>
+</head>
+<body>
+    <h1>Formulario de Pago</h1>
+
+    <!-- Formulario para ingresar los detalles del producto -->
+    <form id="payment-form" method="POST" action="/checkout">
+        <label for="product_title">Título del Producto:</label>
+        <input type="text" id="product_title" name="product_title" required><br><br>
+
+        <label for="quantity">Cantidad:</label>
+        <input type="number" id="quantity" name="quantity" value="1" min="1" required><br><br>
+
+        <label for="unit_price">Precio Unitario (MXN):</label>
+        <input type="number" id="unit_price" name="unit_price" step="0.01" value="75.76" required><br><br>
+
+        <button type="submit">Pagar</button>
+    </form>
+
+    <script>
+        // Llamar a la API cuando se envíe el formulario
+        document.getElementById("payment-form").addEventListener("submit", function(event) {
+            event.preventDefault();  // Evita el envío normal del formulario
+
+            // Obtener los datos del formulario
+            const productTitle = document.getElementById('product_title').value;
+            const quantity = document.getElementById('quantity').value;
+            const unitPrice = document.getElementById('unit_price').value;
+
+            // Enviar los datos al backend (ruta /checkout) para crear la preferencia de pago
+            fetch('/checkout', {
+                method: 'POST',
+                body: new URLSearchParams({
+                    product_title: productTitle,
+                    quantity: quantity,
+                    unit_price: unitPrice
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Si la respuesta contiene la URL de pago, redirigir al usuario
+                if (data.url) {
+                    window.location.href = data.url;  // Redirige al usuario a la URL de Mercado Pago
+                } else {
+                    alert('Error al crear la preferencia de pago');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Hubo un problema al procesar la solicitud.');
+            });
+        });
+    </script>
+</body>
+</html>

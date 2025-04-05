@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verificación de Correo</title>
+</head>
+<body>
+    <div class="container">
+        <img src="static/image/Valking.jpg" alt="VALKING Logo" class="logo">
+        <h2>¡Bienvenido a VALKING!</h2>
+        <p>Hola <strong>{{ nombre_usuario }}</strong>,</p>
+        <p>Gracias por registrarte en nuestra plataforma. Para completar tu registro y asegurar tu cuenta, verifica tu correo electrónico utilizando el siguiente PIN.</p>
+        <p>Este mensaje fue enviado a: <span class="user-email">{{ correo_usuario }}</span></p>
+        <div class="pin">{{ pin }}</div>
+        <p>También puedes hacer clic en el siguiente botón para verificar tu cuenta:</p>
+        <a href="https://tu-dominio.com/verificar?pin={{ pin }}" class="button">Verificar Cuenta</a>
+        <p>Si no solicitaste este registro, ignora este mensaje.</p>
+        <img src="static/image/Logo V1_1.jpg" alt="Alas VALKING" class="footer-img">
+    </div>
+</body>
+</html>

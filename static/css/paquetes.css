@@ -1,0 +1,129 @@
+body {
+    font-family: helvetica;
+    margin: 0;
+    background-color: #f4f4f4;
+}
+
+/* Header */
+header {
+    background-color: #37495E;
+    color: white;
+    padding: 10px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+.logo img {
+    height: 38px;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 30px;
+    padding: 0;
+    margin: 0;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: white;
+    font-weight: lighter;
+}
+
+nav ul li a:hover {
+    text-decoration: underline;
+}
+
+.user-icon a {
+    color: white;
+    font-size: 28px;
+    text-decoration: none;
+}
+
+.user-icon a:hover {
+    color: #f4f4f4;
+}
+
+/*Paquetes*/
+.paquetes .anuncio{
+    text-align: left;
+    font-size: 16px;
+}
+
+.paquetes {
+    text-align: center;
+    padding: 30px;
+}
+
+.text-large {
+    white-space: pre-line;
+}
+
+.cards {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.card {
+    background: white;
+    border-radius: 20px;
+    padding: 15px;
+    box-shadow: 0 10px 10px rgba(0,0,0,0.1);
+    width: 150px;
+}
+
+.card h2 {
+    margin: 10px 0;
+    font-size: 4em;
+}
+
+.card h3 {
+    font-size: 16px;
+}
+
+.price {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.expiry {
+    color: gray;
+}
+
+.first-time {
+    position: relative; /* Para posicionar el badge dentro de la card */
+    overflow: hidden;   /* Para evitar que el badge sobresalga de la card */
+}
+
+.first-time .badge {
+    background: linear-gradient(to right, red, blue);
+    color: white;
+    padding: 5px 0;            /* Ajuste del padding para hacerlo más delgado */
+    border-radius: 10px 10px 0 0; /* Solo bordes superiores redondeados */
+    position: absolute;        /* Posicionamiento absoluto para pegarlo al borde */
+    top: 0;                    /* Pegado al borde superior */
+    left: 0;                   /* Alineado al borde izquierdo */
+    right: 0;                  /* Alineado al borde derecho */
+    text-align: center;        /* Centrar el texto */
+    font-weight: bold;         /* Resalta el texto */
+}
+
+
+/* Footer */
+footer {
+    background-color: #37495E;
+    color: white;
+    text-align: center;
+    padding: 15px 0;
+}

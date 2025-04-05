@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paquetes - VALKIN</title>
+    <link rel="stylesheet" href="static/css/paquetes.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://js.stripe.com/v3/"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const primeraCompra = {{ primera_compra | tojson }};
+            const paqueteAdquirido = {{ paquete_adquirido | tojson }};
+
+            if (paqueteAdquirido) {
+                document.getElementById("paquete-advertencia").style.display = "block";
+            }
+
+            if (!primeraCompra) {
+                const firstTimeCard = document.querySelector(".first-time");
+                if (firstTimeCard) {
+                    firstTimeCard.style.display = "none";
+                }
+            }
+        });
+
+        function pagarPaquete(element) {
+            const paqueteAdquirido = {{ paquete_adquirido | tojson }};
+            if (paqueteAdquirido) {
+                alert("No puedes adquirir más paquetes hasta que caduque el actual.");
+                return;
+            }
+            
+            const horas = element.getAttribute("data-horas");
+            const precio = element.getAttribute("data-precio");
+
+            fetch('/stripe_pay', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ horas: horas, precio: precio })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.checkout_session_id) {
+                    var stripe = Stripe(data.checkout_public_key);
+                    stripe.redirectToCheckout({ sessionId: data.checkout_session_id });
+                } else {
+                    alert('Error al generar la sesión de pago.');
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <div class="header-left">
+            <div class="logo">
+                <a href="/home">
+                    <img src="static/image/Logos%20SVG%20Valking.png" alt="VALKING Logo" height="50">
+                </a>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="/reservacion">RESERVAR</a></li>
+                    <li><a href="/perfil">MI PERFIL</a></li>
+                    <li><a href="#">INSTRUCTORES</a></li>
+                    <li><a href="/tienda">TIENDA</a></li>
+                    <li><a href="#">TUTORIALES</a></li>
+                    <li><a href="/paquetes">PAQUETES</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="user-icon">
+            {% if g.user %}
+                <span>{{ g.user['nombre'] }}</span> <!-- Muestra el nombre del usuario -->
+                <a href="/logout" title="Cerrar Sesión">
+                    <i class="fa-solid fa-user"></i>
+                </a>
+            {% else %}
+                <a href="/" title="Iniciar Sesión">
+                    <i class="fa-solid fa-user"></i>
+                </a>
+            {% endif %}
+        </div>
+    </header>
+
+    <main class="paquetes">
+        <div class="anuncio">
+            <h1>Paquetes</h1>
+            <p class="text-large">
+                Para programar una clase, necesitas disponer de al menos un crédito activo en tu cuenta.
+                Los créditos son personales y no se pueden transferir entre usuarios ni regiones. Sin embargo,
+                tienes la opción de añadir amigos a tu reservación. Cada clase requiere un crédito.
+            </p>
+        </div>
+
+        <div id="paquete-advertencia" class="advertencia" style="display: none;">
+            <p><strong>No puedes adquirir más paquetes hasta que caduque el actual.</strong></p>
+        </div>
+
+        <div class="cards">
+            <div class="card first-time" data-horas="2" data-precio="300" onclick="pagarPaquete(this)">
+                <div class="badge">PRIMERA VEZ</div>
+                <h2>2</h2>
+                <h3>HORAS</h3>
+                <p class="price">$300</p>
+                <p class="expiry">Expira: 15 Días</p>
+            </div>
+
+            <div class="card" data-horas="1" data-precio="200" onclick="pagarPaquete(this)">
+                <h2>1</h2>
+                <h3>HORA</h3>
+                <p class="price">$200</p>
+                <p class="expiry">Expira: 15 Días</p>
+            </div>
+
+            <div class="card" data-horas="5" data-precio="1000" onclick="pagarPaquete(this)">
+                <h2>5</h2>
+                <h3>HORAS</h3>
+                <p class="price">$1000</p>
+                <p class="expiry">Expira: 30 Días</p>
+            </div>
+
+            <div class="card" data-horas="10" data-precio="2000" onclick="pagarPaquete(this)">
+                <h2>10</h2>
+                <h3>HORAS</h3>
+                <p class="price">$2000</p>
+                <p class="expiry">Expira: 40 Días</p>
+            </div>
+
+            <div class="card" data-horas="25" data-precio="5000" onclick="pagarPaquete(this)">
+                <h2>25</h2>
+                <h3>HORAS</h3>
+                <p class="price">$5000</p>
+                <p class="expiry">Expira: 60 Días</p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 VALKING - Todos los derechos reservados.</p>
+        <p>Política de Privacidad | Términos y Condiciones</p>
+    </footer>
+</body>
+</html>

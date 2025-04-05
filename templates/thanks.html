@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gracias por tu compra</title>
+    <link href="{{ url_for('static', filename='bootstrap.min.css') }}" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="jumbotron text-center">
+            <h1 class="display-4">¡Gracias por tu compra!</h1>
+            <p class="lead">Tu pago fue procesado exitosamente.</p>
+            <hr class="my-4">
+            {% if amount_total and status and payment_id %}
+                <p><strong>Monto total:</strong> ${{ amount_total }} {{ currency or 'USD' }}</p>
+                <p><strong>Estado del pago:</strong> {{ status }}</p>
+                <p><strong>ID del pago:</strong> {{ payment_id }}</p>
+                {% if customer_email %}
+                    <p><strong>Correo electrónico:</strong> {{ customer_email }}</p>
+                {% endif %}
+                {% if customer_name %}
+                    <p><strong>Nombre del cliente:</strong> {{ customer_name }}</p>
+                {% endif %}
+
+                <script>
+                    const paymentData = {
+                        customer_email: "{{ customer_email or '' }}",
+                        amount_total: "{{ amount_total }}",
+                        currency: "{{ currency or 'USD' }}",
+                        status: "{{ status }}",
+                        customer_name: "{{ customer_name or '' }}",
+                        payment_id: "{{ payment_id }}"
+                    };
+                    console.log("Detalles del pago:", paymentData);
+                </script>
+            {% else %}
+                <p class="text-danger">Hubo un error al recuperar los detalles del pago. Por favor, contacta con soporte.</p>
+            {% endif %}
+            <a class="btn btn-primary mt-3" href="/paquetes">Volver a la página principal</a>
+        </div>
+        <footer class="footer text-center mt-4">
+            <p>&copy; 2025 VALKING - Todos los derechos reservados.</p>
+        </footer>
+    </div>
+</body>
+</html>

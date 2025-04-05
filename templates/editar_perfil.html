@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Editar Perfil</title>
+        <link rel="icon" href="static/image/Logo_Valkin_1.png" type="image/png">
+        <link rel="stylesheet" href="static/css/editar_perfil.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    </head>
+    <body>
+        <!-- HEADER -->
+        <header>
+            <div class="header-left">
+                <div class="logo">
+                    <a href="/home">
+                        <img src="static/image/Logos%20SVG%20Valking.png" alt="VALKING Logo" height="50">
+                    </a>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="/reservacion">RESERVAR</a></li>
+                        <li><a href="/perfil">MI PERFIL</a></li>
+                        <li><a href="/tienda">TIENDA</a></li>
+                        <li><a href="#">TUTORIALES</a></li>
+                        <li><a href="/paquetes">PAQUETES</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="user-icon">
+                {% if g.user %}
+                    <span>{{ g.user['nombre'] }}</span>
+                    <a href="/logout" title="Cerrar Sesión">
+                        <i class="fa-solid fa-user"></i>
+                    </a>
+                {% else %}
+                    <a href="/" title="Iniciar Sesión">
+                        <i class="fa-solid fa-user"></i>
+                    </a>
+                {% endif %}
+            </div>
+        </header>
+
+        <!-- CONTENIDO -->
+        <div class="container">
+            <h2>Editar Perfil</h2>
+            <form>
+                <!-- FOTO DE PERFIL -->
+                <div class="profile-container full-width">
+                    <img src="static/image/Logo_Valkin_1.png" alt="Foto de perfil" class="profile-pic">
+                    <label for="foto">Foto de Perfil:</label>
+                    <input type="file" id="foto" name="foto" accept="image/*">
+                </div>
+
+                <!-- CAMPOS EN DOS COLUMNAS -->
+                <label for="nombre">Nombre:</label> 
+                <input type="text" id="nombre" name="nombre" required>
+
+                <label for="apellidos">Apellidos:</label>
+                <input type="text" id="apellidos" name="apellidos" required>
+
+                <label for="correo">Correo:</label> <!-- SE LLENA AUTOMÁTICAMENTE -->
+                <input type="email" id="correo" name="correo" required>
+
+                <label for="contrasena">Contraseña:</label> <!-- SE LLENA AUTOMÁTICAMENTE -->
+                <input type="password" id="contrasena" name="contrasena" required>
+
+                <label for="telefono">Teléfono:</label>
+                <input type="tel" id="telefono" name="telefono" required>
+
+                <label for="direccion">Dirección:</label>
+                <input type="text" id="direccion" name="direccion">
+
+                <label for="fecha_nacimiento">Fecha de Nacimiento:</label>
+                <input type="date" id="fecha_nacimiento" name="fecha_nacimiento">
+
+                <label for="tipo_perfil">Tipo de Perfil:</label> <!-- SE LLENA AUTOMÁTICAMENTE -->
+                <input type="text" id="tipo_perfil" name="tipo_perfil">
+
+                <label for="institucion">Institución:</label>
+                <input type="text" id="institucion" name="institucion">
+
+                <label for="vehiculo">Vehículo:</label>
+                <select id="vehiculo" name="vehiculo">
+                    <option value="ninguno">Ninguno</option>
+                    <option value="auto">Boeing 737-800</option>
+                    <option value="moto">AIRBUS 320</option>
+                    <option value="bicicleta">Cessna 172</option>
+                    <option value="ninguno">Beechcraft Baron 58</option>
+                    <option value="auto">Cessna Grand Caravan</option>
+                </select>
+
+                <label for="Perfiricos">Perifericos:</label>
+                <select id="Perifericos" name="Perifericos">
+                    <option value="ninguno">Ninguno</option>
+                    <option value="Thrustmaster TCA Sidestick Airbus Edition">Thrustmaster TCA Sidestick Airbus Edition</option>
+                    <option value="Thrustmaster TCA Officer Pack Airbus Edition">Thrustmaster TCA Officer Pack Airbus Edition</option>
+                    <option value="Logitech G Saitek Pro">Logitech G Saitek Pro</option>
+                </select>
+
+                <label for="insignia">Insignia:</label>
+                <select id="insignia" name="insignia">
+                    <option value="basico">Básico</option>
+                    <option value="avanzado">Avanzado</option>
+                    <option value="experto">Experto</option>
+                </select>
+            </form>
+            <!-- BOTÓN CENTRADO -->
+            <div class="button-container">
+                <button type="submit">Guardar Cambios</button>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VALKING - Simuladores de Vuelo</title>
+    <link rel="stylesheet" href="static/css/home.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Obtener estadísticas de usuario
+            fetch("/home", { headers: { "Accept": "application/json" } })
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("horas_activas").innerText = data.horas_activas;
+                    document.getElementById("promedio_horas").innerText = Number(data.promedio_horas).toFixed(1);
+                })
+                .catch(error => console.error("Error al obtener datos:", error));
+
+            // Obtener horas disponibles
+            fetch("/horas_disponibles")
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("horas_disponibles").innerText = data.success ? data.horas_restantes : 0;
+                })
+                .catch(error => console.error("Error al obtener horas disponibles:", error));
+
+            // Obtener reservas más cercanas
+            fetch("/reservas_cercanas")
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success && data.reservas.length > 0) {
+                        let reservas = data.reservas;
+
+                        // Reserva más cercana
+                        let nextFlight = document.getElementById("next-flight");
+                        nextFlight.innerHTML = reservas.length > 0 ? `
+                            <img src="static/image/flight_simulator.jpg" alt="Flight Simulator">
+                            <div class="flight-info">
+                                <h3>Microsoft Flight Simulator</h3>
+                                <p>📅 ${reservas[0].fecha_formateada} | ⏰ ${reservas[0].hora_inicio} - ${reservas[0].hora_fin}</p>
+                                <p>👨‍🏫 ${data.usuario || 'Usuario'}</p>
+                                <button>Iniciar Vuelo →</button>
+                            </div>
+                        ` : "<p>No hay reservas próximas.</p>";
+
+                        // Reservas siguientes (Agenda)
+                        let agendaHtml = "<h3>AGENDA</h3>";
+                        for (let i = 1; i < reservas.length; i++) {
+                            agendaHtml += `
+                                <div class="class-box">
+                                    📅 ${reservas[i].fecha_formateada} <br> ⏰ ${reservas[i].hora_inicio} - ${reservas[i].hora_fin}
+                                </div>
+                            `;
+                        }
+                        document.getElementById("agenda").innerHTML = agendaHtml;
+                    }
+                })
+                .catch(error => console.error("Error al obtener reservas:", error));
+        });
+    </script>
+</head>
+<body>
+    <header>
+        <div class="header-left">
+            <div class="logo">
+                <a href="/home">
+                    <img src="static/image/Logos%20SVG%20Valking.png" alt="VALKING Logo" height="50">
+                </a>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="/reservacion">RESERVAR</a></li>
+                    <li><a href="/perfil">MI PERFIL</a></li>
+                    <li><a href="/tienda">TIENDA</a></li>
+                    <li><a href="#">TUTORIALES</a></li>
+                    <li><a href="/paquetes">PAQUETES</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="user-icon">
+            {% if g.user %}
+                <span>{{ g.user['nombre'] }}</span>
+                <a href="/logout" title="Cerrar Sesión">
+                    <i class="fa-solid fa-user"></i>
+                </a>
+            {% else %}
+                <a href="/" title="Iniciar Sesión">
+                    <i class="fa-solid fa-user"></i>
+                </a>
+            {% endif %}
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="user-info">
+                <div class="avatar">
+                    <img src="static/image/Piloto.png" alt="user">
+                </div>
+                <div class="user-details">
+                    <h2>{{ g.user['nombre'] if g.user else 'Usuario' }}</h2>
+                    <img src="static/image/PILOTO%20PROF.png" alt="Insignia" height="35">
+                    <p>Piloto Estudiante</p>
+                    <p><strong>Horas Activas:</strong> <span id="horas_activas">0</span> HRS</p>
+                </div>
+                <div class="user-stats">
+                    <div class="stats-card">
+                        <p class="stats-title">HORAS DISPONIBLES</p>
+                        <p class="stats-value" id="horas_disponibles">0</p>
+                        <p class="stats-subtitle">HORAS</p>
+                    </div>
+                    <div class="stats-card">
+                        <p class="stats-title">PROMEDIO DE HRS</p>
+                        <p class="stats-value" id="promedio_horas">0.0</p>
+                        <p class="stats-subtitle">HRS/SEMANA</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flight-section">
+                <div class="next-flight" id="next-flight">
+                    <p>Cargando reserva...</p>
+                </div>
+                <div class="agenda" id="agenda">
+                    <h3>AGENDA</h3>
+                    <p>Cargando reservas...</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 VALKING - Todos los derechos reservados.</p>
+        <p>Política de Privacidad | Términos y Condiciones</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro | Valking</title>
+    <link rel="stylesheet" href="static/css/master2.css">
+</head>
+<body>
+    
+    <div class="login-box">
+        <div class="logo-frame">
+            <img src="static/image/Logo Ala.jpg" alt="logo de ala">
+        </div>
+        <h1>Registrar usuario</h1>
+
+        <!-- Mostrar mensajes de éxito o error -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash-message {{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        
+        <form action="/registro" method="post">
+            <!-- NOMBRE -->
+            <label for="nombre">Nombre</label>
+            <input type="text" placeholder="Ingresar Nombre" id="nombre" name="nombre" required>
+
+            <!-- CORREO -->
+            <label for="email">Correo</label>
+            <input type="email" placeholder="ejemplo@correo.com" id="email" name="email" required> 
+
+            <!-- Casilla de Términos y Condiciones -->
+            <div>
+                <input type="checkbox" name="terms_conditions" id="terms_conditions" required>
+                <label for="terms_conditions">
+                    Acepto los <a href="/terminos" target="_blank">Términos y condiciones</a>
+                </label>
+            </div>
+
+            <!-- Casilla de Aviso de Privacidad -->
+            <div>
+                <input type="checkbox" name="privacy_policy" id="privacy_policy" required>
+                <label for="privacy_policy">
+                    Acepto el <a href="/privacidad" target="_blank">Aviso de privacidad</a>
+                </label>
+            </div>
+
+            <!-- BOTÓN DE REGISTRO -->
+            <input type="submit" value="Registrar usuario">
+
+            <div class="enlace">
+                <span>¿Ya tienes una cuenta?</span>
+                <a href="/">Iniciar sesión</a></br>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

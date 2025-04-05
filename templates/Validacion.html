@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validar PIN | Valking</title>
+    <link rel="stylesheet" href="static/css/pin.css">
+</head>
+<body>
+    <div class="pin-box">
+        <div class="logo-frame">
+            <img src="static/image/Logo Ala.jpg" alt="logo de ala">
+        </div>
+        <h1>Validar PIN</h1>
+        <form method="POST" action="/validacion?correo={{ correo }}">
+            <!-- Mostrar el correo como texto plano -->
+            <label for="correo">Correo de envío:</label>
+            <span id="correo" style="font-weight: bold;">{{ correo }}</span>
+            
+            <!-- Campo oculto para enviar el correo al backend -->
+            <input type="hidden" name="correo" value="{{ correo }}">
+            
+            <!-- Casillas para el PIN -->
+            <div class="inp">
+                <input type="text" maxlength="1" id="pin1" required>
+                <input type="text" maxlength="1" id="pin2" required>
+                <input type="text" maxlength="1" id="pin3" required>
+                <input type="text" maxlength="1" id="pin4" required>
+                <input type="text" maxlength="1" id="pin5" required>
+                <input type="text" maxlength="1" id="pin6" required>
+            </div>
+
+            <!-- Campo oculto para el PIN completo -->
+            <input type="hidden" name="pin" id="pinHidden">
+            
+            <!-- BOTÓN DE VALIDACIÓN -->
+            <input type="submit" value="Validar PIN">
+            
+            <!-- ENLACE PARA REENVIAR EL PIN -->
+            <div class="enlace">
+                <span>¿No recibiste el PIN?</span>
+                <a href='/reenvio/{{ correo }}'>Reenviar PIN</a>
+            </div>
+        </form>
+    </div>
+
+    <!-- Cargar el script externo -->
+    <script src="static/js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Administrador</title>
+        <link rel="icon" href="static/image/Logo Ala.jpg" type="image/png">
+        <link rel="stylesheet" href="static/css/administrador.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <style>
+            .main-content {
+                flex-grow: 1;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                overflow-y: auto;
+                padding: 20px;
+                width: 100%;
+            }
+            .dashboard {
+                width: 100%;
+                max-width: 1400px;
+                padding: 20px;
+                background: #fff;
+                border-radius: 10px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                margin-bottom: 20px;
+            }
+            .table-container {
+                width: 100%;
+                overflow-x: auto;
+            }
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-top: 10px;
+            }
+            th, td {
+                border: 1px solid #ddd;
+                padding: 10px;
+                text-align: center;
+            }
+            th {
+                background-color: #f4f4f4;
+            }
+            canvas {
+                width: 100% !important;
+                max-height: 400px;
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            <div class="header-left">
+                <div class="logo">
+                    <img src="static/image/Logos SVG Valking.png" alt="Logo Valkin" height="50">
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#">DASHBOARDS</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="user-icon">
+                <a href="#logout" title="Cerrar Sesión">
+                    <i class="fa-solid fa-user"></i>
+                </a>
+            </div>
+        </header>
+        <div class="container">
+            <div class="sidebar">
+                <div class="division">
+                    <img src="static/image/Logo V1_1.jpg" alt="division Valkin" height="35">
+                </div>
+                <h2>DASHBOARDS</h2>
+                <a href="#"><i class="fas fa-users"></i> Usuarios</a>
+                <a href="#"><i class="fas fa-plane"></i> Simuladores</a>
+                <a href="#"><i class="fas fa-clock"></i> Horarios</a>
+                <a href="#"><i class="fas fa-tags"></i> Promociones</a>
+            </div>
+            <div class="main-content">
+                <!-- Dashboard Usuarios -->
+                <div class="dashboard">
+                    <h2>Dashboard 1: Usuarios</h2>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Fecha</th>
+                                    <th>Usuarios Normales</th>
+                                    <th>Usuarios Google</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tablaUsuarios"></tbody>
+                        </table>
+                    </div>
+                    <canvas id="usuariosChart"></canvas>
+                </div>
+                
+                <!-- Dashboard Pagos -->
+                <div class="dashboard">
+                    <h2>Dashboard 2: Pagos</h2>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Fecha</th>
+                                    <th>Normales Consumidos</th>
+                                    <th>Normales No Consumidos</th>
+                                    <th>Google Consumidos</th>
+                                    <th>Google No Consumidos</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tablaPagos"></tbody>
+                        </table>
+                    </div>
+                    <canvas id="pagosChart"></canvas>
+                </div>
+
+                <!-- Dashboard Reservas -->
+                <div class="dashboard">
+                    <h2>Dashboard 3: Reservas</h2>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Fecha</th>
+                                    <th>ID Usuario</th>
+                                    <th>ID Google</th>
+                                    <th>Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tablaReservas"></tbody>
+                        </table>
+                    </div>
+                    <canvas id="reservasChart"></canvas>
+                </div>
+            </div>
+        </div>
+        <script src="static/js/dashboard.js"></script>
+    </body>
+</html>

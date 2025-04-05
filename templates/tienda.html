@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VALKING - Simuladores de Vuelo</title>
+    <link rel="stylesheet" href="static/css/tienda.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-left">
+            <div class="logo">
+                <!-- Aquí envuelves la imagen en un enlace que lleva a la ruta '/' (home) -->
+                <a href="/home">
+                    <img src="static/image/Logos%20SVG%20Valking.png" alt="VALKING Logo" height="50">
+                </a>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="/reservacion">RESERVAR</a></li>
+                    <li><a href="/perfil">MI PERFIL</a></li>
+                    <!--<li><a href="#">INSTRUCTORES</a></li>-->
+                    <li><a href="/tienda">TIENDA</a></li>
+                    <li><a href="#">TUTORIALES</a></li>
+                    <li><a href="/paquetes">PAQUETES</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="user-icon">
+            {% if g.user %}
+                <span>{{ g.user['nombre'] }}</span> <!-- Muestra el nombre del usuario -->
+                <a href="/logout" title="Cerrar Sesión">
+                    <i class="fa-solid fa-user"></i>
+                </a>
+            {% else %}
+                <a href="/" title="Iniciar Sesión">
+                    <i class="fa-solid fa-user"></i>
+                </a>
+            {% endif %}
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <section class="tienda">
+            <h1>Nuestra Tienda</h1>
+            <p>Explora nuestros productos recomendados para mejorar tu experiencia de simulación de vuelo.</p>
+
+            <div class="productos">
+                <!-- Producto 1 -->
+                <div class="producto">
+                    <img src="https://m.media-amazon.com/images/I/71T+cWTYOHL._AC_SX679_.jpg" alt="Joystick Logitech X52">
+                    <h3>THRUSTMASTER T-Flight Hotas X</h3>
+                    <p>Joystick profesional para simuladores de vuelo.</p>
+                    <a href="https://www.amazon.com.mx/THRUSTMASTER-T-Flight-Hotas-Flight-Windows/dp/B001CXYMFS/ref=sr_1_1?crid=2UN5GX2TQ20T&dib=eyJ2IjoiMSJ9.uhKGLLo89XIAH3bZyQLFiydJCOsAET813huj315hqWepvTvlWg5LnZmQfk4tQaLXL8D425wA4C7JAmQ03DC3PV_dov_dPtLy5-QfcsdbX-dLFZ2S6Wuigw1d5eqhCMbBnbaIhlj4t_3r7J-1j4EImzMHIz4Ndyj9k_ja34D5yzM26tUuCd7otBHcUI3VYJWOa_b0WJfEyOTWn2kIUXdHEKWyesSBPJ_T84EFbfBLOZLcG42u0Ju-oHE3Pt5VoucnRr44VI8SCwNdbeCEgDYkr-E8ncGxNYxcdZvH-QnTitKa7piGVdYO--VILf-1MbjQSK9qaiB4FaFkIbmiDR5hV81d8QPXwbcVsrbqPv7OupFFrsqlLCfx3c1QGm4RMjVMeJ95QdwJelZXL8VVa3xUIlWLHiZ-R8XiyEUICBXM1FcLd2EO2gbbzcPB44tzVEx-.AL4UWViw7Bo-Rzxjq6ke7qJkafNZyglOlxT4IXgSlN8&dib_tag=se&keywords=simulador%2Bde%2Bvuelo&qid=1738949077&sprefix=vuelo%2Caps%2C92&sr=8-1&ufe=app_do%3Aamzn1.fos.11ae6451-5dc3-4857-b526-4af4b1a76922&th=1" target="_blank" class="btn-comprar">Comprar en Amazon</a>
+                </div>
+
+                <!-- Producto 2 -->
+                <div class="producto">
+                    <img src="https://m.media-amazon.com/images/I/715LZQ7FCHL._AC_SX679_.jpg" alt="Thrustmaster TCA Airbus">
+                    <h3>Thrustmaster TCA Captain Pack Xbox – Airbus Edition</h3>
+                    <p>Control inspirado en los aviones Airbus.</p>
+                    <a href="https://www.amazon.com.mx/Thrustmaster-Captains-Pack-Airbus-XBOX/dp/B0BG3DQLDD/ref=sr_1_2?crid=2UN5GX2TQ20T&dib=eyJ2IjoiMSJ9.uhKGLLo89XIAH3bZyQLFiydJCOsAET813huj315hqWepvTvlWg5LnZmQfk4tQaLXL8D425wA4C7JAmQ03DC3PV_dov_dPtLy5-QfcsdbX-dLFZ2S6Wuigw1d5eqhCMbBnbaIhlj4t_3r7J-1j4EImzMHIz4Ndyj9k_ja34D5yzM26tUuCd7otBHcUI3VYJWOa_b0WJfEyOTWn2kIUXdHEKWyesSBPJ_T84EFbfBLOZLcG42u0Ju-oHE3Pt5VoucnRr44VI8SCwNdbeCEgDYkr-E8ncGxNYxcdZvH-QnTitKa7piGVdYO--VILf-1MbjQSK9qaiB4FaFkIbmiDR5hV81d8QPXwbcVsrbqPv7OupFFrsqlLCfx3c1QGm4RMjVMeJ95QdwJelZXL8VVa3xUIlWLHiZ-R8XiyEUICBXM1FcLd2EO2gbbzcPB44tzVEx-.AL4UWViw7Bo-Rzxjq6ke7qJkafNZyglOlxT4IXgSlN8&dib_tag=se&keywords=simulador+de+vuelo&qid=1738949077&sprefix=vuelo%2Caps%2C92&sr=8-2&ufe=app_do%3Aamzn1.fos.f692f78b-157c-4a5e-9f23-65555b3d6469" target="_blank" class="btn-comprar">Comprar en Amazon</a>
+                </div>
+
+                <!-- Producto 3 -->
+                <div class="producto">
+                    <img src="https://m.media-amazon.com/images/I/61gVHRRZnYL._AC_SX679_.jpg" alt="TrackIR 5 - Head Tracker">
+                    <h3>Thrustmaster TCA Quadrant Boeing Edition, Réplica del Cuadrante de Aceleración, Flaps, Palancas Intercambiables</h3>
+                    <p>Seguimiento de cabeza para una experiencia más inmersiva.</p>
+                    <a href="https://www.amazon.com.mx/Thrustmaster-THRUSTMASTER-QUADRANT-Boeing-StandardXbox/dp/B09JM996T9/ref=sr_1_6?crid=2UN5GX2TQ20T&dib=eyJ2IjoiMSJ9.uhKGLLo89XIAH3bZyQLFiydJCOsAET813huj315hqWepvTvlWg5LnZmQfk4tQaLXL8D425wA4C7JAmQ03DC3PV_dov_dPtLy5-QfcsdbX-dLFZ2S6Wuigw1d5eqhCMbBnbaIhlj4t_3r7J-1j4EImzMHIz4Ndyj9k_ja34D5yzM26tUuCd7otBHcUI3VYJWOa_b0WJfEyOTWn2kIUXdHEKWyesSBPJ_T84EFbfBLOZLcG42u0Ju-oHE3Pt5VoucnRr44VI8SCwNdbeCEgDYkr-E8ncGxNYxcdZvH-QnTitKa7piGVdYO--VILf-1MbjQSK9qaiB4FaFkIbmiDR5hV81d8QPXwbcVsrbqPv7OupFFrsqlLCfx3c1QGm4RMjVMeJ95QdwJelZXL8VVa3xUIlWLHiZ-R8XiyEUICBXM1FcLd2EO2gbbzcPB44tzVEx-.AL4UWViw7Bo-Rzxjq6ke7qJkafNZyglOlxT4IXgSlN8&dib_tag=se&keywords=simulador+de+vuelo&qid=1738949077&sprefix=vuelo%2Caps%2C92&sr=8-6&ufe=app_do%3Aamzn1.fos.f692f78b-157c-4a5e-9f23-65555b3d6469" target="_blank" class="btn-comprar">Comprar en Amazon</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 VALKING - Todos los derechos reservados.</p>
+        <p>Política de Privacidad | Términos y Condiciones</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,45 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+.container {
+    max-width: 600px;
+    margin: 20px auto;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.logo {
+    max-width: 150px;
+    margin-bottom: 20px;
+}
+.pin {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    background: #eee;
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 5px;
+}
+.button {
+    display: inline-block;
+    background: #007bff;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+.footer-img {
+    max-width: 100%;
+    margin-top: 20px;
+}
+.user-email {
+    font-weight: bold;
+    color: #007bff;
+}

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VALKING - Simuladores de Vuelo</title>
+    <link rel="stylesheet" href="static/css/reservacion.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="header-left">
+            <div class="logo">
+                <a href="/home">
+                    <img src="static/image/Logos%20SVG%20Valking.png" alt="VALKING Logo" height="50">
+                </a>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="/reservacion">RESERVAR</a></li>
+                    <li><a href="/perfil">MI PERFIL</a></li>
+                    <li><a href="/tienda">TIENDA</a></li>
+                    <li><a href="#">TUTORIALES</a></li>
+                    <li><a href="/paquetes">PAQUETES</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="user-icon">
+            {% if g.user %}
+                <span>{{ g.user['nombre'] }}</span>
+                <a href="/logout" title="Cerrar Sesión">
+                    <i class="fa-solid fa-user"></i>
+                </a>
+            {% else %}
+                <a href="/" title="Iniciar Sesión">
+                    <i class="fa-solid fa-user"></i>
+                </a>
+            {% endif %}
+        </div>
+    </header>
+
+    <main>
+        <div class="hero">
+            <div class="overlay">
+                <div class="reservacion">
+                    <h2>¿Cuándo quieres volar?</h2>
+                    <div id="horasDisponibles" class="info-box">
+                        <p>Cargando disponibilidad...</p>
+                    </div>
+                    <form id="reservacionForm">
+                        <div class="inputs">
+                            <label for="fecha">FECHA</label>
+                            <input type="date" id="fecha" name="fecha" required disabled>
+
+                            <label for="hora">HORA DE VUELO</label>
+                            <select id="hora" name="hora" required disabled>
+                                <option value="">Selecciona una hora</option>
+                            </select>
+
+                            <label for="duracion">DURACIÓN (en horas)</label>
+                            <input type="number" id="duracion" name="duracion" min="1" required disabled>
+
+                            <button type="submit" id="reservarBtn" disabled>RESERVAR</button>
+                        </div>
+                    </form>
+
+                    <div id="mensajeReserva"></div>
+                </div>
+            </div>
+        </div>    
+    </main>
+
+    <footer>
+        <p>&copy; 2025 VALKING - Todos los derechos reservados.</p>
+        <p>Política de Privacidad | Términos y Condiciones</p>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const inputFecha = document.getElementById("fecha");
+            const inputHora = document.getElementById("hora");
+            const inputDuracion = document.getElementById("duracion");
+            const reservarBtn = document.getElementById("reservarBtn");
+            const mensajeReserva = document.getElementById("mensajeReserva");
+            verificarHorasDisponibles();
+
+            function verificarHorasDisponibles() {
+                fetch("/horas_disponibles")  
+                .then(response => response.json())
+                .then(data => {
+                    let horasBox = document.getElementById("horasDisponibles");
+
+                    if (data.success) {
+                        if (data.horas_restantes > 0) {
+                            horasBox.innerHTML = `<p><strong>Horas disponibles:</strong> ${data.horas_restantes} horas.</p>`;
+                            habilitarFormulario(true, data.horas_restantes);
+                        } else {
+                            horasBox.innerHTML = `<p style="color: red;"><strong>No tienes horas disponibles. 
+                                <a href='/paquetes' style='color: blue; text-decoration: underline;'>Compra un paquete aquí</a></strong></p>`;
+                            habilitarFormulario(false);
+                        }
+                    } else {
+                        horasBox.innerHTML = `<p style="color: red;">${data.error}</p>`;
+                        habilitarFormulario(false);
+                    }
+                })
+                .catch(error => {
+                    console.error("Error al obtener horas:", error);
+                    document.getElementById("horasDisponibles").innerHTML = `<p style="color: red;">Error de conexión.</p>`;
+                    habilitarFormulario(false);
+                });
+            }
+
+            function habilitarFormulario(estado, maxHoras = 1) {
+                inputFecha.disabled = !estado;
+                inputHora.disabled = !estado;
+                inputDuracion.disabled = !estado;
+                reservarBtn.disabled = !estado;
+                inputDuracion.max = maxHoras;
+            }
+
+            inputFecha.addEventListener("change", function () {
+                fetch("/verificar_disponibilidad", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ fecha: inputFecha.value })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        if (data.color === "rojo" && data.disponibilidad.length > 0) {
+                            data.color = "verde"; 
+                        }
+                        cambiarColorInput(inputFecha, data.color);
+                        actualizarDisponibilidadHoras(data.disponibilidad);
+                        reservarBtn.disabled = (data.color === "rojo");
+                    }
+                })
+                .catch(error => console.error("Error al verificar disponibilidad:", error));
+            });
+
+            function cambiarColorInput(input, color) {
+                if (color === "verde") {
+                    input.style.backgroundColor = "#218838";
+                    input.style.borderColor = "#1e7e34";
+                    input.style.color = "white";
+                } else if (color === "amarillo") {
+                    input.style.backgroundColor = "#e0a800";
+                    input.style.borderColor = "#d39e00";
+                    input.style.color = "black";
+                } else {
+                    input.style.backgroundColor = "#c82333";
+                    input.style.borderColor = "#bd2130";
+                    input.style.color = "white";
+                }
+            }
+
+            function actualizarDisponibilidadHoras(disponibilidad) {
+                inputHora.innerHTML = "";
+                disponibilidad.forEach(d => {
+                    const option = document.createElement("option");
+                    option.value = d.hora;
+                    option.textContent = `${d.hora}:00`;
+                    if (d.estado === "ocupado") {
+                        option.disabled = true;
+                        option.style.color = "red";
+                    }
+                    inputHora.appendChild(option);
+                });
+            }
+
+            document.getElementById("reservacionForm").addEventListener("submit", function(event) {
+                event.preventDefault(); 
+
+                const confirmar = confirm("¿Estás seguro de que deseas reservar este vuelo?");
+                if (!confirmar) {
+                    return;
+                }
+
+                reservarBtn.disabled = true;
+                let formData = new FormData(this);
+
+                fetch("/reservacion", {
+                    method: "POST",
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        mensajeReserva.innerHTML = `<p style="color: green;"><strong>¡Reservación realizada con éxito!</strong></p>`;
+                        setTimeout(() => location.reload(), 3000);
+                    } else {
+                        mensajeReserva.innerHTML = `<p style="color: red;"><strong>Error en la reserva: ${data.error}</strong></p>`;
+                        reservarBtn.disabled = false;
+                    }
+                })
+                .catch(error => {
+                    console.error("Error en la reserva:", error);
+                    mensajeReserva.innerHTML = `<p style="color: red;"><strong>Error al conectar con el servidor.</strong></p>`;
+                    reservarBtn.disabled = false;
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,126 @@
+/* Estilo general del cuerpo */
+body {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../image/Fondo.jpg) no-repeat center top;
+    background-size: cover;
+    font-family: sans-serif;
+    height: 100vh;
+}
+
+/* Estilo del contenedor principal */
+.pin-box {
+    width: 450px;
+    height: 320px;
+    background: #0D283B;
+    border-radius: 10px;
+    color: #fff;
+    top: 50%;
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    box-sizing: border-box;
+    padding: 70px 30px;
+    text-align: center;
+}
+
+/* Logo */
+.logo-frame {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    margin: -110px auto 20px;
+    overflow: hidden;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo-frame img {
+    width: 50px;
+    height: 70px;
+}
+
+/* Título */
+.pin-box h1 {
+    margin: 0;
+    padding: 0 0 20px;
+    text-align: center;
+    font-size: 22px;
+}
+
+/* Estilo para casillas de PIN */
+.inp input {
+    width: 40px;
+    height: 40px;
+    margin: 5px;
+    font-size: 18px;
+    outline: none;
+    border: 1px solid #ecf0f1;
+    border-radius: 5px;
+    text-align: center;
+    color: #fff;
+    background: transparent;
+}
+
+/* Botón de Validar */
+.pin-box input[type="submit"] {
+    border: none;
+    outline: none;
+    width: 200px;
+    height: 40px;
+    background: #4E6580;
+    color: #fff;
+    font-size: 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.pin-box input[type="submit"]:hover {
+    background: #7692b2;
+}
+
+/* Enlace para reenviar PIN */
+.pin-box .enlace {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.enlace span {
+    text-decoration: none;
+    font-size: 14px;
+    line-height: 20px;
+    color: darkgrey;
+}
+
+.pin-box a {
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+    color: #b6d2f2;
+}
+
+.pin-box a:hover {
+    color: #fff;
+}
+
+/* Botón de Verificar (opcional si se requiere en lugar del botón submit) */
+button {
+    width: 80px;
+    font-weight: 600;
+    border-radius: 20px;
+    border: 2px solid #fff;
+    color: #fff;
+    padding: 5px;
+    cursor: pointer;
+    background: transparent;
+    transition: 0.4s ease-in;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #fff;
+    color: #0D283B;
+}
